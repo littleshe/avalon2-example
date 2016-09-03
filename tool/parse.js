@@ -14,9 +14,10 @@ var xmlOptions = {
 	attrValueProcessors: []
 }
 
-var xml = fs.readFileSync('LocList.xml','utf-8')
+var xml = fs.readFileSync('./tool/LocList.xml','utf-8')
 
 parse(xml,xmlOptions,function(err,result){	
 	result = result.children.children
-	fs.writeFileSync('../dist/area.json',JSON.stringify(result,null,2))
+	//JSON.stringify(result,null,2) 格式化
+	fs.writeFileSync('./dist/area.js','var AREA_DATA='+JSON.stringify(result))
 })
