@@ -1,0 +1,8 @@
+<div>
+	<span ms-for="(index,item) in @data">
+		<select ms-on-change="@change($event,item,index)" ms-duplex="@selectedValue[index]">
+			<option value="-1">请选择</option>
+			<option ms-for="el in item" ms-attr="{value:el.name}">{{el.name}}</option>
+		</select>
+	</span>
+</div>
