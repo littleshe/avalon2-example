@@ -1,6 +1,6 @@
 # avalon2-地区选择器
 
-[https://littleshe.github.io/ms-area-select/](示例)
+[示例](https://littleshe.github.io/ms-area-select/)
 
 数据来源：[]()
 
