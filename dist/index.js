@@ -18,7 +18,7 @@ avalon.component('ms-area-select', {
 				this.selectedValue.removeAt(next)	
 			}
 
-			if(option.value !== -1){
+			if(option.value != -1){
 				var data = item.$model[el.selectedIndex-1]
 				if(data.children && data.children.length){
 					this.data.set(next,data.children)
@@ -33,7 +33,7 @@ avalon.component('ms-area-select', {
 			var data = avalon.mix(true,[],AREA_DATA)
 			//var copyData = avalon.mix(true,[],AREA_DATA)
 			this.data.set(cur,data)
-			while(cur < len && this.selectedValue[cur] !== -1){
+			while(cur < len && this.selectedValue[cur] != -1){
 				data = getArea(data,this.selectedValue[cur]).children
 				this.data.set(++cur,data)
 			}
