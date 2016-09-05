@@ -2,7 +2,7 @@
 
 [示例](https://littleshe.github.io/ms-area-select/)
 
-数据来源：[]()
+数据来源：[下载](http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/doc/addresslist.zip)
 
 原格式为xml，写了个工具转成json格式
 
