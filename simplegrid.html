@@ -77,12 +77,12 @@
 					defaults: {	
 						columns: null,
 						data: null,
-						//各种奇葩写法，可能是我理解不够深
-						kw: '',
-						filterFn: function(el){	
-							var kw = avalon.vmodels.grid.kw
-							return !kw || (kw && (el.name.toLowerCase().indexOf(kw) > -1))
-						},
+						/*	
+							duplex 无法双向同步到组件内，
+							且filterBy的this指向data item，而不是组件的vm，
+							改成传入过滤函数
+						*/
+						filter: avalon.noop,
 						sortKey: '',
 						sortOrders: {},
 						sortBy: function(key){	
@@ -108,11 +108,12 @@
 					  { name: 'Bruce Lee', power: 9000 },
 					  { name: 'Jackie Chan', power: 7000 },
 					  { name: 'Jet Li', power: 8000 }
-					]
-				})
-				
-				simplegrid.$watch('searchQuery',function(value){	
-					avalon.vmodels.grid.kw = value
+					],
+					// 过滤函数
+					searchQueryFn: function(el){	
+						var kw = avalon.vmodels.simplegrid.searchQuery
+						return !kw || (kw && (el.name.toLowerCase().indexOf(kw) > -1))
+					}
 				})
 				
 				avalon.scan(document.body)
@@ -136,14 +137,13 @@
 		  </tr>
 		</thead>
 		<tbody>
-		  <tr :for="entry in @data | filterBy(@filterFn) | orderBy(@sortKey,@sortOrders[@sortKey])">
+		  <tr :for="entry in @data | filterBy(@filter) | orderBy(@sortKey,@sortOrders[@sortKey])">
 			<td :for="key in @columns">
 			  {{entry[key]}}
 			</td>
 		  </tr>
 		</tbody>
 	  </table>
-	  {{@kw}}
 	  </div>
 	</script>
 
@@ -152,7 +152,7 @@
 	  <form id="search">
 		Search <input name="query" :duplex="@searchQuery">
 	  </form>
-	  <ms-simplegrid :widget="{id:'grid',data:@gridData,columns:@gridColumns}">
+	  <ms-simplegrid :widget="{id:'grid',data:@gridData,columns:@gridColumns,filter:@searchQueryFn}">
 	  </ms-simplegrid>
 	</div>
 
