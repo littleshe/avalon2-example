@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Latest Vue.js Commits</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+		<style>
+		#demo {
+		  font-family: 'Helvetica', Arial, sans-serif;
+		}
+		a {
+		  text-decoration: none;
+		  color: #f66;
+		}
+		li {
+		  line-height: 1.5em;
+		  margin-bottom: 20px;
+		}
+		.author, .date {
+		  font-weight: bold;
+		}
+		</style>
+        <script src="lib/avalon2.js"></script>
+		<script src="lib/jquery.js"></script>
+        <script>
+		
+			var apiURL = 'https://api.github.com/repos/vuejs/vue/commits?per_page=3&sha='
+			
+			var demo = avalon.define({	
+				$id: 'demo',
+				branches: ['master','dev'],
+				currentBranch: 'master',
+				commits: null
+			})
+			
+			demo.$watch('currentBranch',fetchData)
+			
+			demo.$watch('onReady',fetchData)
+			
+			function fetchData(){	
+				$.getJSON(apiURL + demo.currentBranch,function(data){	
+					demo.commits = data
+				})
+			}
+
+        </script>
+    </head>
+
+	<body>
+	<div id="demo" ms-controller="demo">
+	  <h1>Latest Vue.js Commits</h1>
+	  <!--ms-for: branch in @branches-->
+		<input type="radio"
+		  name="branch"
+		  :attr="{id:branch,value:branch}"
+		  :duplex="@currentBranch">
+		<label :attr="{for:branch}">{{branch}}</label>
+	  <!--ms-for-end:-->
+	  <p>vuejs/vue@{{@currentBranch}}</p>
+	  <ul>
+		<li :for="record in @commits">
+		  <a :attr="{href:record.html_url}" target="_blank" class="commit">{{record.sha.slice(0, 7)}}</a>
+		  - <span class="message">{{record.commit.message | truncate}}</span><br>
+		  by <span class="author">{{record.commit.author.name}}</span>
+		  at <span class="date">{{record.commit.author.date | date}}</span>
+		</li>
+	  </ul>
+	</div>
+	</body>
+	
+</html>

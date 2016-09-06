@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>avalon2-地区选择器</title>
+</head>
+<body>
+<div ms-controller="test">
+	<xmp ms-widget="[{is:'ms-area-select',$id:'test-area-select'}, @config]"></xmp>
+	<div>{{@config.selectedValue}}</div>
+</div>
+<br><br>
+<div ms-controller="test2">
+	<xmp ms-widget="[{is:'ms-area-select',$id:'test-area-select2'}, @config]"></xmp>
+	<div>{{@config.selectedValue}}</div>
+</div>
+<script src="../lib/avalon.js"></script>
+<script src="dist/area.js"></script>
+<script src="dist/index.js"></script>
+<script>
+	var vm = avalon.define({	
+		$id: 'test',
+		config: {
+			selectedValue: [-1]
+		}		
+	})
+	var vm2 = avalon.define({	
+		$id: 'test2',
+		config: {
+			selectedValue: ['中国','北京','海淀']
+		}		
+	})
+</script>
+</body>
+</html>
