@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>include组件</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+        <script src="lib/avalon2.js"></script>
+		<script src="lib/jquery.js"></script>
+        <script>
+			
+			var demo = avalon.define({	
+				$id: 'demo',
+				headerURL: 'include/header.html',
+				footerURL: 'include/footer.html',
+				bodyURL: 'include/body1.html',
+				load: function(){	
+					
+				}
+			})
+			
+			demo.$watch('onReady',function(){})
+
+        </script>
+    </head>
+
+	<body>
+	<div ms-controller="demo">
+	  <input type="button" value="页面1" ms-on-click="@bodyURL='include/body1.html'">
+	  <input type="button" value="页面2" ms-on-click="@bodyURL='include/body2.html'">
+	  <span style="color:red">测试{{@bodyURL}}</span>
+	  
+	</div>		
+	</body>
+</html>

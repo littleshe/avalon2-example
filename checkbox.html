@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>全选</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+		<style>
+
+		</style>
+        <script src="lib/avalon2.js"></script>
+        <script>
+		
+			var demo = avalon.define({	
+				$id: 'demo',
+				allchecked: false,
+				data: null,
+				checkClick: function(e){	
+					var checked = e.target.checked
+					if(checked){	
+						demo.allchecked = demo.data.every(function (el) {
+							return el.checked
+						})
+					}else{	
+						demo.allchecked = false
+					}
+				},
+				checkAllClick: function(e){
+					var checked = e.target.checked
+					demo.data.forEach(function(el){	
+						el.checked = checked
+					})
+				}
+			})
+			
+			demo.$watch('onReady',function(){	
+				var data = []
+				avalon.range(0,5).forEach(function(i){	
+					data.push({	
+						checked: false,
+						name: 'label' + i
+					})
+				})
+				demo.data = data
+			})
+		
+        </script>
+    </head>
+
+	<body>
+	<div ms-controller="demo">
+	  <input type="checkbox" id="checkall" :duplex-checked="@allchecked" data-duplex-changed="@checkAllClick" />
+	  <label for="checkall">全选</label> 
+	  <p :for="(i,el) in @data">
+		<input type="checkbox" :duplex-checked="el.checked" :attr="{id:'a'+i}" data-duplex-changed="@checkClick" />
+		<label :attr="{for:'a'+i}">{{el.name}}</label>
+	  </p>
+	</div>		
+	</body>
+</html>

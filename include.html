@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>include组件</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+        <script src="lib/avalon2.js"></script>
+		<script src="lib/jquery.js"></script>
+        <script>
+			avalon.component('ms-include',{	
+				template: '<div ms-html="@renderhtml"></div>',
+				defaults: {	
+					url: '',
+					renderhtml: '',
+					onInit: function(){	
+						this.load()
+					},
+					onViewChange: function(comp,b,c,d){	
+						this.load()
+					},
+					onLoading: function(){	
+						return 'loading...'
+					},
+					onRender: function(html){	
+						return html
+					},
+					load: function(){
+						this.renderhtml = this.onLoading()
+						var url = this.url
+						if(typeof url === 'function'){	
+							url = this.url()
+						}
+						var self = this
+						setTimeout(function(){	
+							self.renderhtml = self.onRender(url)
+						},1000)
+					}
+				}
+			})
+			
+			var demo = avalon.define({	
+				$id: 'demo',
+				headerURL: 'include/header.html',
+				footerURL: 'include/footer.html',
+				bodyURL: 'include/body1.html',
+				getBodyURL: function(){
+					return this.bodyURL
+				},
+				onBodyRender: function(html){
+					return 'body: ' + html 
+				},
+				onLoading: function(){	
+					return '加载中。。。'
+				}
+			})
+
+        </script>
+    </head>
+
+	<body>
+	<div ms-controller="demo">
+	  <input type="button" value="页面1" ms-on-click="@bodyURL='include/body1.html'">
+	  <input type="button" value="页面2" ms-on-click="@bodyURL='include/body2.html'">
+	  <span style="color:red">测试{{@bodyURL}}</span>
+	  <xmp ms-widget="{is:'ms-include',id:'inc-header',url:@headerURL}"></xmp>
+	  <xmp ms-widget="{is:'ms-include',id:'inc-body',url:@getBodyURL,onLoading:@onLoading,onRender:@onBodyRender}"></xmp>
+	  <xmp ms-widget="{is:'ms-include',id:'inc-footer',url:@footerURL}"></xmp>
+	</div>		
+	</body>
+</html>
