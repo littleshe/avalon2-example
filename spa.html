@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<div :controller="app">
+    <div ms-html="@view"></div>
+    <a href="javascript:void(0)" :click="page('/page1')">page1</a><br>
+    <a href="javascript:void(0)" :click="page('/page2')">page2</a>
+</div>
+<script src="js/avalon.js"></script>
+<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/page.js/1.7.1/page.js"></script>-->
+<script>
+    avalon.component("page1",{  
+        template: '<div><h1>page1</h1><wbr is="page1-sub" /></div>'
+    })
+
+    avalon.component('page1-sub',{  
+        template: '<h3>page1 subpage</h3>'
+    })
+
+    avalon.component('page2',{  
+        template: '<div><h1>page2</h1><h3 :click="change">{{@str}}</h3></div>',
+        defaults: { 
+            str: 'this is page2 controller',
+            change: function(){ 
+                this.str = Math.random()
+            }
+        }
+    })
+
+    var vm = avalon.define({ 
+        $id: 'app',
+        view: '',
+        page: function(path){   
+            var name = path.slice(1)
+            vm.view = '<div is="'+ name +'" cached="true" :widget="{id:\''+ name +'\'}"></div>'
+        }
+    })
+
+</script>
+</body>
+</html>
