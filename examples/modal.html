@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>modal</title>
+    <!-- Bootstrap core CSS -->
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container" :controller="app">
+    <h1>弹出框</h1>
+    <p>   
+        <xmp is="bs-button" :click="@showModal">modal:{{@config.visible}}</xmp>
+    </p>
+    <p>
+        <xmp is="bs-button" :click="@config2.visible=true">long modal</xmp>
+    </p>
+    <xmp is="bs-modal" :widget="@config">
+        <div slot="content">One fine body…</div>
+    </xmp>
+    <xmp is="bs-modal" :widget="@config2">
+        <div slot="content">
+            <p :for="el in dialogData">dialog-{{el}}</p>
+        </div>
+    </xmp>
+</div>
+
+<script src="../mod.js"></script>
+<script>
+    require('button')
+    require('modal')
+
+    var vm = avalon.define({ 
+        $id: 'app',
+        showModal: function(){
+            this.config.visible = true
+        },
+        config: {
+            id: 'myModal',
+            title: 'Modal title',
+            visible: false,
+            onClose: function(){    
+                vm.config.visible = false
+            },
+            onReady: function(){ 
+                //这样不行吧……
+                this.$watch('visible',function(val){   
+                    vm.config.visible = val
+                })
+            }
+        },
+        dialogData: avalon.range(30),
+        config2: {  
+            title: 'Modal2',
+            visible: false,
+            onClose: function(){    
+                vm.config2.visible = false
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

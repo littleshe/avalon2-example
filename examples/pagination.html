@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pagination</title>
+    <!-- Bootstrap core CSS -->
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .pager{text-align: left}
+        .pager .previous>a,.pager .next>a{float: none}
+        .pager li{margin:0 2px;}
+    </style>
+</head>
+<body>
+<div class="container" :controller="app">
+    <h1>分页</h1>
+    <xmp is="bs-pagination" :widget="@config"></xmp>
+    <strong> {{@config2.currentPage}}</strong>
+    <xmp is="bs-pagination" :widget="@config2"></xmp>
+</div>
+<script src="../mod.js"></script>
+<script>
+    require('pagination');
+    var vm = avalon.define({ 
+        $id: 'app',
+        config: {   
+            totalPage: 10,
+            currentPage: 4,
+            onPageClick: function(page){}
+        },
+        config2: {   
+            totalPage: 5,
+            currentPage: 1,
+            simple: true,
+            previousText: '&larr; Previous',
+            nextText: 'Next &rarr;',
+            onPageClick: function(val){   
+                vm.config2.currentPage = val
+            }
+        }
+    })
+</script>
+</body>
+</html>

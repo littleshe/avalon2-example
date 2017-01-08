@@ -1,0 +1,13 @@
+<nav :if="@totalPage>1">
+  <ul :class="[@wrapClass]">
+    <li :class="@previousClass">
+        <a href="#" :html="@previousText" :click="@goToPage('previous', $event)"></a>
+    </li>
+    <li :for="i in pages" :class="{active:i===@currentPage}">
+        <a href="#" :click="@goToPage(i, $event)">{{i}}</a>
+    </li>
+    <li :class="@nextClass">
+        <a href="#" :html="@nextText" :click="@goToPage('next', $event)"></a>
+    </li>
+  </ul>
+</nav>

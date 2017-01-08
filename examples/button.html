@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>button</title>
+    <!-- Bootstrap core CSS -->
+    <style>
+        .btn{margin-right: 10px;}
+        .btn-group .btn{margin-right: 0}
+    </style>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container" :controller="app">
+
+    <h1>按钮</h1>
+    <h3>type</h3>
+    <xmp is="bs-button">default</xmp>
+    <xmp is="bs-button" :widget="{type:'primary'}">primary</xmp>
+    <xmp is="bs-button" :widget="{type:'success'}">success</xmp>
+    <xmp is="bs-button" :widget="{type:'info'}">info</xmp>
+    <xmp is="bs-button" :widget="{type:'warning'}">warning</xmp>
+    <xmp is="bs-button" :widget="{type:'danger'}">danger</xmp>
+    <xmp is="bs-button" :widget="{type:'link'}">link</xmp>
+
+    <h3>size:lg,sm,xs</h3>
+    <xmp is="bs-button" :widget="{size:'lg'}">large</xmp>
+    <xmp is="bs-button" :widget="{size:'sm'}">small</xmp>
+    <xmp is="bs-button" :widget="{size:'xs'}">mini</xmp>
+
+    <h3>block</h3>
+    <xmp is="bs-button" :widget="{block:true}">block</xmp>
+
+    <h3>disabled</h3>
+    <xmp is="bs-button" :widget="{disabled:true}">disabled</xmp>
+
+    <h3>with icon</h3>
+    <xmp is="bs-button"><span class="glyphicon glyphicon-upload"></span> upload</xmp>
+    <xmp is="bs-button"><span class="glyphicon glyphicon-refresh"></span> refresh</xmp>
+
+    <h3>group</h3>
+    <div class="btn-group">
+        <xmp is="bs-button">Left</xmp>
+        <xmp is="bs-button">Middle</xmp>
+        <xmp is="bs-button">Right</xmp>
+    </div>
+
+</div>
+<script src="../mod.js"></script>
+<script>
+    require('button');
+    avalon.define({ 
+        $id: 'app'
+    })
+</script>
+</body>
+</html>
